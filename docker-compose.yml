@@ -1,0 +1,31 @@
+version: '3.6'
+services:
+  server:
+    image: stupidc/mail
+    ports:
+      - '25:25'
+      - '587:587'
+      - '465:465'
+      - '993:993'
+      - '995:995'
+    secrets:
+      - mysql_password
+    volumes:
+      - maildata:/var/mail
+    depends_on:
+      - db
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_DATABASE: mail
+    secrets:
+      - mysql_password
+    volumes:
+      - maildb:/var/lib/mysql
+secrets:
+  mysql_password:
+    external: true
+volumes:
+  maildata:
+  maildb:

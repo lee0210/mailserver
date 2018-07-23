@@ -1,0 +1,4 @@
+hosts = db
+user = root
+dbname = mail
+query = select userid from users where userid = '%u'

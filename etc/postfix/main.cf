@@ -1,0 +1,40 @@
+myhostname = stupidc.com
+mydomain = stupidc.com
+myorigin = $mydomain
+mydestination = localhost  
+mynetworks = 127.0.0.0/8
+inet_interfaces = all
+
+virtual_transport = dovecot
+dovecot_destination_recipient_limit = 1
+virtual_mailbox_domains = $mydomain
+virtual_mailbox_maps = mysql:/etc/postfix/mysql_mailbox_maps
+virtual_alias_maps = mysql:/etc/postfix/mysql_alias_maps
+
+smtpd_sasl_type = dovecot
+smtpd_sasl_path = private/auth
+smtpd_sasl_auth_enable = yes
+smtpd_relay_restrictions = 
+  permit_mynetworks, 
+  permit_sasl_authenticated, 
+  reject_unauth_destination
+
+smtpd_sasl_security_options = noanonymous
+smtpd_sasl_tls_security_options = noanonymous
+smtpd_use_tls = yes
+smtpd_tls_auth_only = yes
+smtpd_tls_security_level = encrypt
+smtpd_tls_protocols = !SSLv2, !SSLv3
+smtpd_tls_cert_file = /etc/certs/stupidc.pem
+smtpd_tls_key_file = /etc/certs/stupidc.pem
+smtpd_tls_session_cache_timeout = 3600s
+smtpd_tls_loglevel = 3
+mailbox_size_limit = 0
+message_size_limit = 20480000
+
+relayhost = [smtp.gmail.com]:587
+smtp_use_tls = yes
+smtp_sasl_auth_enable = yes
+smtp_sasl_security_options =
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_tls_CAfile = /etc/ssl/certs/stupidc.pem
