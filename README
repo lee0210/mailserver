@@ -14,7 +14,7 @@ Postfix & Dovecot
   >> CTRL-D to exit
 
   docker secret create sasl_passwd -
-  >> [smtp-relay.gmail.com]:587    youraddress@gmail.com:password
+  >> [smtp.gmail.com]:587    youraddress@gmail.com:password
   >> CTRL-D to exit
 
 Mysql
