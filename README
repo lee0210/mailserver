@@ -1,6 +1,35 @@
 Mail Server
 
 Docker
-Postfix
-Dovecot
+  docker build . -t stupidc/mail
+  docker stack deploy -c docker-compose.yml mail
+
+Postfix & Dovecot
+  make yourCA.pem
+
+  docker secret create cert.pem yourCA.pem
+
+  docker secret create mydomain -
+  >> yourdomain.com
+  >> CTRL-D to exit
+
+  docker secret create sasl_passwd -
+  >> [smtp-relay.gmail.com]:587    youraddress@gmail.com:password
+  >> CTRL-D to exit
+
 Mysql
+  docker secret create mysql_password -
+  >> input any password you want
+  >> CTRL-D to exit
+  
+  docker exec -it <mysqlcontainerid> bash -c 'mysql -p$(< /run/secrets/mysql_password)'
+
+  CREATE TABLE `users` (
+    `userid` char(255) NOT NULL,
+    `domain` char(255) DEFAULT NULL,
+    `password` char(255) DEFAULT NULL,
+    `home` char(255) DEFAULT NULL,
+    PRIMARY KEY (`userid`)
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  
+  INSERT INTO `users` VALUES ('username','domain','password','/var/mail/username');

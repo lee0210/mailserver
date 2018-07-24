@@ -1,5 +1,4 @@
-myhostname = stupidc.com
-mydomain = stupidc.com
+myhostname = $mydomain
 myorigin = $mydomain
 mydestination = localhost  
 mynetworks = 127.0.0.0/8
@@ -30,8 +29,12 @@ smtpd_tls_loglevel = 3
 mailbox_size_limit = 0
 message_size_limit = 20480000
 
-relayhost = [smtp.gmail.com]:587
+relayhost = [smtp-relay.gmail.com]:587
 smtp_use_tls = yes
 smtp_sasl_auth_enable = yes
 smtp_sasl_security_options =
-smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_password_maps = hash:/run/secrets/sasl_passwd
+smtpd_tls_cert_file = /run/secrets/cert.pem
+smtpd_tls_key_file = /run/secrets/cert.pem
+smtp_tls_CAfile = /run/secrets/cert.pem
+

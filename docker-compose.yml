@@ -10,7 +10,9 @@ services:
       - '995:995'
     secrets:
       - mysql_password
-      - ca_name
+      - cert.pem
+      - sasl_passwd
+      - mydomain
     volumes:
       - maildata:/var/mail
     depends_on:
@@ -27,7 +29,11 @@ services:
 secrets:
   mysql_password:
     external: true
-  ca_name:
+  cert.pem:
+    external: true
+  sasl_passwd:
+    external: true
+  mydomain:
     external: true
 volumes:
   maildata:
