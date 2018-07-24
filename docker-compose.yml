@@ -10,6 +10,7 @@ services:
       - '995:995'
     secrets:
       - mysql_password
+      - ca_name
     volumes:
       - maildata:/var/mail
     depends_on:
@@ -25,6 +26,8 @@ services:
       - maildb:/var/lib/mysql
 secrets:
   mysql_password:
+    external: true
+  ca_name:
     external: true
 volumes:
   maildata:
